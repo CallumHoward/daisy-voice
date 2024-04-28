@@ -1,5 +1,5 @@
-import {orderRankField} from '@sanity/orderable-document-list'
-import {defineField, defineType} from 'sanity'
+import { orderRankField } from '@sanity/orderable-document-list'
+import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'testimonial',
@@ -38,12 +38,13 @@ export default defineType({
     }),
     defineField({
       name: 'content',
-      description: 'Pick out 1-2 adjectives and bold them. Surround in smart quotes, eg. “hello”',
+      description:
+        'Pick out 1-2 adjectives and bold them. Surround in smart quotes, eg. “hello”',
       title: 'Testimonial content',
       type: 'blockContent',
       validation: (Rule) => Rule.required(),
     }),
-    orderRankField({type: 'testimonial'}),
+    orderRankField({ type: 'testimonial' }),
   ],
   preview: {
     select: {
