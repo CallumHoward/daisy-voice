@@ -6,6 +6,7 @@
   import TestimonialCard from "../components/TestimonialCard.svelte";
   import { urlFor } from "$lib/sanity/image";
   import { PortableText } from "@portabletext/svelte";
+  import SoundCloudTrack from "../components/SoundCloudTrack.svelte";
 
   export let data: PageData;
   const postsRes = useQuery(data.posts);
@@ -29,20 +30,21 @@
 </section>
 
 <section>
-  {#if posts?.length}
-    {#each posts as post}
-      <Card {post} />
-    {/each}
-  {:else}
-    No posts yet.
-  {/if}
+  <div class="carousel mx-4 w-dvw gap-8">
+    <div class="carousel-item w-[348px]">
+      <SoundCloudTrack id="1786260612" />
+    </div>
+    <div class="carousel-item w-[348px]">
+      <SoundCloudTrack id="1786260612" />
+    </div>
+    <div class="carousel-item w-[348px]">
+      <SoundCloudTrack id="1786260612" />
+    </div>
+  </div>
 </section>
 
 <section class="bg-base-200">
-  <div class="hero-content flex-col text-center">
-    <h2 class="text-3xl font-bold">Testimonials</h2>
-    <p class="py-6">Hear what my clients have to say about my work.</p>
-  </div>
+  <h2 class="mb-16 text-center text-3xl font-bold">Testimonials</h2>
   <div class="carousel mx-4 w-dvw gap-8 rounded-box">
     {#if testimonials?.length}
       {#each testimonials as testimonial}
