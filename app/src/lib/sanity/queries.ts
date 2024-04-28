@@ -15,3 +15,15 @@ export interface Post {
   mainImage?: ImageAsset;
   body: PortableTextBlock[];
 }
+
+export const testimonialsQuery = groq`*[_type == "testimonial"] | order(_createdAt desc)`;
+
+export interface Testimonial {
+  _type: "testimonial";
+  _createdAt: string;
+  name: string;
+  from: string;
+  content: PortableTextBlock[];
+  avatarSrc?: ImageAsset;
+  rating?: number;
+}
