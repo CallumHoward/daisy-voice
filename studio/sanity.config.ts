@@ -1,7 +1,8 @@
-import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {presentationTool} from 'sanity/presentation'
+import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
+import {FolderIcon} from '@sanity/icons'
 
 import {schemaTypes} from './schemas'
 
@@ -14,7 +15,21 @@ export default defineConfig({
   projectId,
   dataset,
   plugins: [
-    structureTool(),
+    structureTool({
+      structure: (S, context) =>
+        S.list()
+          .title('Content')
+          .items([
+            S.documentTypeListItem('post'),
+            orderableDocumentListDeskItem({
+              type: 'testimonial',
+              title: 'Testimonial',
+              icon: FolderIcon,
+              S,
+              context,
+            }),
+          ]),
+    }),
     presentationTool({
       previewUrl: {
         origin: process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:5173',
@@ -24,7 +39,6 @@ export default defineConfig({
         },
       },
     }),
-    visionTool(),
   ],
   schema: {
     types: schemaTypes,

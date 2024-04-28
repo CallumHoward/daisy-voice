@@ -16,7 +16,7 @@ export interface Post {
   body: PortableTextBlock[];
 }
 
-export const testimonialsQuery = groq`*[_type == "testimonial"] | order(_createdAt desc)`;
+export const testimonialsQuery = groq`*[_type == "testimonial"] | order(orderRank)`;
 
 export interface Testimonial {
   _type: "testimonial";

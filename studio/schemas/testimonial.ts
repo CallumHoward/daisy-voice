@@ -1,3 +1,4 @@
+import {orderRankField} from '@sanity/orderable-document-list'
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
@@ -42,6 +43,7 @@ export default defineType({
       type: 'blockContent',
       validation: (Rule) => Rule.required(),
     }),
+    orderRankField({type: 'testimonial'}),
   ],
   preview: {
     select: {
