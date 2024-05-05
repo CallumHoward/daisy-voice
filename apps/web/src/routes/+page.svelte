@@ -9,8 +9,10 @@
 
   export let data: PageData;
   const testimonialsRes = useQuery(data.testimonials);
+  const tracksRes = useQuery(data.tracks);
 
   $: ({ data: testimonials } = $testimonialsRes);
+  $: ({ data: tracks } = $tracksRes);
 </script>
 
 <section id="intro" class="hero aspect-square max-h-screen bg-base-200">
@@ -29,32 +31,31 @@
 <section id="demos" class="min-h-[50dvh]">
   <div class="hero-content flex-col justify-start overflow-hidden text-center">
     <h2 class="mb-16 text-center text-3xl font-bold">Demos</h2>
-    <div class="carousel w-full gap-8 px-4">
-      <div class="carousel-item w-[348px]">
-        <SoundCloudTrack id="1786260612" />
+    {#if tracks?.length}
+      <div class="carousel w-full gap-8 px-4">
+        {#each tracks as { title, share, embed }}
+          <div class="carousel-item w-[348px]">
+            <SoundCloudTrack {title} {share} {embed} />
+          </div>
+        {/each}
       </div>
-      <div class="carousel-item w-[348px]">
-        <SoundCloudTrack id="1786260612" />
-      </div>
-      <div class="carousel-item w-[348px]">
-        <SoundCloudTrack id="1786260612" />
-      </div>
-    </div>
+    {:else}
+      No demos yet
+    {/if}
   </div>
 </section>
 
 <section id="testimonials" class="min-h-[50dvh] bg-base-200">
   <div class="hero-content flex-col justify-start overflow-hidden">
     <h2 class="mb-16 text-center text-3xl font-bold">Testimonials</h2>
-    <div class="carousel w-full gap-8 px-4">
-      {#if testimonials?.length}
+    {#if testimonials?.length}
+      <div class="carousel w-full gap-8 px-4">
         {#each testimonials as testimonial}
           <div class="carousel-item">
             <TestimonialCard
               rating={5}
               avatarSrc={testimonial.avatarSrc
-                ? // @ts-expect-error Sanity Image types don't match :(
-                  urlFor(testimonial.avatarSrc).url()
+                ? urlFor(testimonial.avatarSrc).url()
                 : ""}
               name={testimonial.name}
               from={testimonial.from}
@@ -63,10 +64,10 @@
             </TestimonialCard>
           </div>
         {/each}
-      {:else}
-        No testimonials yet
-      {/if}
-    </div>
+      </div>
+    {:else}
+      No testimonials yet
+    {/if}
   </div>
 </section>
 

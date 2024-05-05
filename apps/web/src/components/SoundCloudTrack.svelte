@@ -1,7 +1,12 @@
 <script lang="ts">
-  export let id: string;
+  import { browser } from "$app/environment";
 
-  const params = new URLSearchParams({
+  export let title: string;
+  export let share: string;
+  export let embed: string;
+
+  $: id = embed.match(/tracks\/(\d+)\b/)?.[1];
+  $: params = new URLSearchParams({
     url: `https://api.soundcloud.com/tracks/${id}`,
     color: "7480ff",
     auto_play: "false",
@@ -11,15 +16,24 @@
     show_reposts: "false",
     show_teaser: "false",
   });
-  const soundCloudUrl = `https://w.soundcloud.com/player/?${params.toString()}`;
+  $: soundCloudEmbedUrl = `https://w.soundcloud.com/player/?${params.toString()}`;
 </script>
 
-<iframe
-  title="SoundCloud Track"
-  width="100%"
-  height="166"
-  scrolling="no"
-  frameborder="no"
-  allow="autoplay"
-  src={soundCloudUrl}
-/>
+{#if browser && id}
+  <iframe
+    title="SoundCloud Track"
+    width="100%"
+    height="166"
+    scrolling="no"
+    frameborder="no"
+    allow="autoplay"
+    src={soundCloudEmbedUrl}
+  />
+{:else}
+  <a
+    href={share}
+    class="flex h-[166px] w-full flex-col items-center justify-center border"
+  >
+    <h3 class="text-2xl">{title}</h3>
+  </a>
+{/if}

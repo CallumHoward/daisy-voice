@@ -1,33 +1,42 @@
-import { orderRankField } from '@sanity/orderable-document-list'
-import { defineField, defineType } from 'sanity'
+import { orderRankField } from "@sanity/orderable-document-list";
+import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: 'track',
-  title: 'Track',
-  type: 'document',
+  name: "track",
+  title: "Track",
+  type: "document",
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: "title",
+      title: "Title",
+      type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'id',
-      title: 'SoundCloud ID',
+      name: "share",
+      title: "SoundCloud track share URL",
       description:
-        'Number that can be found in the SoundCloud track URL, eg. 226389958',
-      type: 'string',
-      validation: (Rule) => Rule.required().regex(/\d{9}/),
+        "On target track: Share. Eg. `https://soundcloud.com/heather-howard-226389958/narration-childrens-heather`...",
+      type: "string",
+      validation: (Rule) => Rule.required().regex(/soundcloud.com/),
     }),
-    orderRankField({ type: 'track' }),
+    defineField({
+      name: "embed",
+      title: "SoundCloud track embed code",
+      description:
+        'On target track: Share -> Embed. Eg. `<iframe width="100%"`...',
+      type: "string",
+      validation: (Rule) => Rule.required().regex(/tracks\/\b\d{10}\b/),
+    }),
+    orderRankField({ type: "track" }),
   ],
   preview: {
     select: {
-      title: 'title',
-      subtitle: 'id',
+      title: "title",
+      subtitle: "id",
     },
     prepare(selection) {
-      return selection
+      return selection;
     },
   },
-})
+});

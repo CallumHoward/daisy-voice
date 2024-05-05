@@ -20,10 +20,16 @@ export default defineConfig({
         S.list()
           .title("Content")
           .items([
-            S.documentTypeListItem("post"),
             orderableDocumentListDeskItem({
               type: "testimonial",
               title: "Testimonial",
+              icon: FolderIcon,
+              S,
+              context,
+            }),
+            orderableDocumentListDeskItem({
+              type: "track",
+              title: "Track",
               icon: FolderIcon,
               S,
               context,

@@ -68,14 +68,21 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
 export type Track = {
   _id: string;
   _type: "track";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  id: string;
+  title: string;
+  share: string;
+  embed: string;
   orderRank?: string;
 };
 
@@ -120,29 +127,6 @@ export type Testimonial = {
   rating?: number;
   content: BlockContent;
   orderRank?: string;
-};
-
-export type Post = {
-  _id: string;
-  _type: "post";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  slug: Slug;
-  excerpt?: string;
-  mainImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  body?: BlockContent;
 };
 
 export type SanityImageCrop = {
@@ -200,12 +184,6 @@ export type SanityImageMetadata = {
   blurHash?: string;
   hasAlpha?: boolean;
   isOpaque?: boolean;
-};
-
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
 };
 export declare const internalGroqTypeReferenceTo: unique symbol;
 

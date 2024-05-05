@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { browser } from "$app/environment";
 
   export let value = "";
   export let minRows = 1;
@@ -8,14 +8,10 @@
   export let className = "textarea textarea-primary";
   export let lineHeight = 2;
 
-  let overflow = "auto";
+  const overflow = browser ? "hidden" : "auto";
 
   $: minHeight = `${1 + minRows * lineHeight}em`;
   $: maxHeight = maxRows ? `${1 + maxRows * lineHeight}em` : `auto`;
-
-  onMount(() => {
-    overflow = "hidden";
-  });
 </script>
 
 <div class="container">
