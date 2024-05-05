@@ -8,9 +8,11 @@
     <input
       type="radio"
       name="rating"
-      class="mask mask-star bg-orange-400"
+      class="mask mask-star cursor-auto bg-orange-400"
       value={number}
       bind:group={rating}
+      readonly
+      disabled
     />
   {/each}
 </div>

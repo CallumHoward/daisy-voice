@@ -16,7 +16,7 @@
   $: ({ data: testimonials } = $testimonialsRes);
 </script>
 
-<section id="into" class="hero aspect-square max-h-screen bg-base-200">
+<section id="intro" class="hero aspect-square max-h-screen bg-base-200">
   <div class="hero-content max-w-lg text-center">
     <div class="max-w-md">
       <h1 class="text-5xl font-bold">Need a Vocal Artist?</h1>
@@ -46,8 +46,8 @@
   </div>
 </section>
 
-<section id="testimonials" class="bg-base-200">
-  <div class="hero-content flex-col overflow-hidden">
+<section id="testimonials" class="min-h-[50dvh] bg-base-200">
+  <div class="hero-content flex-col justify-start overflow-hidden">
     <h2 class="mb-16 text-center text-3xl font-bold">Testimonials</h2>
     <div class="carousel w-full gap-8 px-4">
       {#if testimonials?.length}
@@ -72,8 +72,8 @@
   </div>
 </section>
 
-<section id="contact">
-  <div class="hero-content flex-col">
+<section id="contact" class="min-h-[50dvh]">
+  <div class="hero-content flex-col justify-start">
     <div class="max-w-md text-center">
       <h2 class="text-3xl font-bold">Contact</h2>
       <p class="mb-6 py-6">Make an enquiry and I'll get back to you ASAP!</p>
