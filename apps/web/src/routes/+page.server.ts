@@ -1,9 +1,5 @@
-import {
-  postsQuery,
-  testimonialsQuery,
-  type Post,
-  type Testimonial,
-} from "$lib/sanity/queries";
+import type { Post, Testimonial } from "$lib/sanity/generated-types";
+import { postsQuery, testimonialsQuery } from "$lib/sanity/queries";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async (event) => {

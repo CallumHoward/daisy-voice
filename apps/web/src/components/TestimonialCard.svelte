@@ -5,7 +5,7 @@
   export let rating: Rating;
   export let avatarSrc: string;
   export let name: string;
-  export let from: string;
+  export let from: string | undefined;
 </script>
 
 <div class="card w-[23rem] bg-base-100 shadow-xl">

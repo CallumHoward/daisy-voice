@@ -56,7 +56,8 @@
             <TestimonialCard
               rating={5}
               avatarSrc={testimonial.avatarSrc
-                ? urlFor(testimonial.avatarSrc).url()
+                ? // @ts-expect-error Sanity Image types don't match :(
+                  urlFor(testimonial.avatarSrc).url()
                 : ""}
               name={testimonial.name}
               from={testimonial.from}
