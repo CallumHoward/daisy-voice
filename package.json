@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "pnpm -r dev",
-    "format": "prettier --cache --write ."
+    "format": "prettier --cache --write .",
+    "pretypegen": "pnpm -F studio exec sanity schema extract --enforce-required-fields",
+    "typegen": "pnpm -F studio exec sanity typegen generate"
   },
   "prettier": {
     "plugins": [
