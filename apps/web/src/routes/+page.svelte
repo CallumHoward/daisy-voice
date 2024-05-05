@@ -1,6 +1,5 @@
 <script lang="ts">
   import { useQuery } from "@sanity/svelte-loader";
-  // import Welcome from "../components/Welcome.svelte";
   import type { PageData } from "./$types";
   import TestimonialCard from "../components/TestimonialCard.svelte";
   import { urlFor } from "$lib/sanity/image";
@@ -9,10 +8,8 @@
   import TextArea from "../components/TextArea.svelte";
 
   export let data: PageData;
-  const postsRes = useQuery(data.posts);
   const testimonialsRes = useQuery(data.testimonials);
 
-  $: ({ data: posts } = $postsRes);
   $: ({ data: testimonials } = $testimonialsRes);
 </script>
 
