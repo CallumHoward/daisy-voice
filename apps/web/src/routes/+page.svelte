@@ -77,8 +77,8 @@
       <h2 class="text-3xl font-bold">Contact</h2>
       <p class="mb-6 py-6">Make an enquiry and I'll get back to you ASAP!</p>
     </div>
-    <form class="form-control gap-4">
-      <span class="flex gap-4">
+    <form class="form-control w-full gap-4">
+      <span class="flex flex-col gap-4 sm:flex-row">
         <input
           type="text"
           placeholder="First Name"
