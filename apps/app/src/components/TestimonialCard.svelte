@@ -8,7 +8,7 @@
   export let from: string;
 </script>
 
-<div class="card w-96 bg-base-100 shadow-xl">
+<div class="card w-[23rem] bg-base-100 shadow-xl">
   <div class="card-body gap-6">
     <blockquote class="grow italic">
       <slot />
