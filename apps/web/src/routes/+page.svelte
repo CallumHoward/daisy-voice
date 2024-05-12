@@ -1,13 +1,16 @@
 <script lang="ts">
   import { useQuery } from "@sanity/svelte-loader";
-  import type { PageData } from "./$types";
+  import type { ActionData, PageData } from "./$types";
   import TestimonialCard from "../components/TestimonialCard.svelte";
   import { urlFor } from "$lib/sanity/image";
   import { PortableText } from "@portabletext/svelte";
   import SoundCloudTrack from "../components/SoundCloudTrack.svelte";
   import TextArea from "../components/TextArea.svelte";
+  import { enhance } from "$app/forms";
 
+  export let form: ActionData;
   export let data: PageData;
+
   const testimonialsRes = useQuery(data.testimonials);
   const tracksRes = useQuery(data.tracks);
 
@@ -77,31 +80,95 @@
       <h2 class="text-3xl font-bold">Contact</h2>
       <p class="mb-6 py-6">Make an enquiry and I'll get back to you ASAP!</p>
     </div>
-    <form class="form-control w-full gap-4">
-      <span class="form-control gap-4 sm:flex-row">
+    {#if !form?.success}
+      <form method="POST" use:enhance class="form-control w-full gap-4">
+        <span class="form-control gap-4 sm:flex-row">
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+            autocomplete="given-name"
+            required
+            class="input input-primary"
+          />
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+            autocomplete="family-name"
+            class="input input-primary"
+          />
+        </span>
         <input
-          type="text"
-          placeholder="First Name"
-          autocomplete="given-name"
+          type="email"
+          name="email"
+          placeholder="Email"
+          autocomplete="email"
+          maxlength="64"
+          required
           class="input input-primary"
         />
-        <input
-          type="text"
-          placeholder="Last Name"
-          autocomplete="family-name"
-          class="input input-primary"
+        <TextArea
+          name="message"
+          placeholder="Message"
+          required
+          minRows={5}
+          maxRows={10}
         />
-      </span>
-      <input
-        type="email"
-        placeholder="Email"
-        autocomplete="email"
-        class="input input-primary"
-      />
-      <TextArea placeholder="Message" minRows={5} maxRows={10} />
-      <button type="submit" class="btn btn-primary w-fit uppercase">Send</button
-      >
-    </form>
+        <button type="submit" class="btn btn-primary w-fit uppercase"
+          >Send</button
+        >
+        {#if form?.missing}
+          <div role="alert" class="alert alert-warning">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              /></svg
+            >
+            <span>Required fields are missing</span>
+          </div>
+        {:else if form && !form.success}
+          <div role="alert" class="alert alert-error">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 shrink-0 stroke-current"
+              fill="none"
+              viewBox="0 0 24 24"
+              ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+              /></svg
+            >
+            <span>Something went wrong, please try again later.</span>
+          </div>
+        {/if}
+      </form>
+    {:else}
+      <div role="alert" class="alert alert-success">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 shrink-0 stroke-current"
+          fill="none"
+          viewBox="0 0 24 24"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+          /></svg
+        >
+        <span>Your message has been sent!</span>
+      </div>
+    {/if}
   </div>
 </section>
 

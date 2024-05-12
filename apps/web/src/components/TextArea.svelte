@@ -4,7 +4,6 @@
   export let value = "";
   export let minRows = 1;
   export let maxRows: number | undefined = undefined;
-  export let placeholder: string | undefined = undefined;
   export let className = "textarea textarea-primary";
   export let lineHeight = 2;
 
@@ -24,7 +23,7 @@
   <textarea
     class={className}
     bind:value
-    {placeholder}
+    {...$$props}
     style="overflow: {overflow}"
   ></textarea>
 </div>
