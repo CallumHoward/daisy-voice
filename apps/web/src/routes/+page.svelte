@@ -78,7 +78,9 @@
   <div class="hero-content flex-col justify-start">
     <div class="max-w-md text-center">
       <h2 class="text-3xl font-bold">Contact</h2>
-      <p class="mb-6 py-6">Make an enquiry and I'll get back to you ASAP!</p>
+      {#if !form?.success}
+        <p class="mb-6 py-6">Make an enquiry and I'll get back to you ASAP!</p>
+      {/if}
     </div>
     {#if !form?.success}
       <form method="POST" use:enhance class="form-control w-full gap-4">
