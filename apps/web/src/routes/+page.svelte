@@ -21,10 +21,10 @@
 <section id="intro" class="hero aspect-square max-h-screen bg-base-200">
   <div class="hero-content max-w-lg text-center">
     <div class="max-w-md">
-      <h1 class="text-5xl font-bold">Need a Vocal Artist?</h1>
+      <h1 class="text-5xl font-bold">Need a Voice Artist?</h1>
       <p class="mb-6 py-6">
-        Hi, my name is Heather, and I specialize in voice overs for commercials,
-        video games, and more.
+        Hi, my name is Heather, and I'm available for any type of voice over;
+        audio books, commercials, video games, and more.
       </p>
       <a href="#contact" class="btn btn-primary uppercase">Contact</a>
     </div>
@@ -74,7 +74,35 @@
   </div>
 </section>
 
-<section id="contact" class="min-h-[50dvh]">
+<section id="testimonials" class="min-h-[50dvh]">
+  <div class="hero-content flex-col justify-start overflow-hidden">
+    <h2 class="mb-16 text-center text-3xl font-bold">Studio Specs</h2>
+    <table class="table">
+      <tr>
+        <th>Mic</th>
+        <td>RODE NT1</td>
+      </tr>
+      <tr>
+        <th>Software</th>
+        <td>Audacity</td>
+      </tr>
+      <tr>
+        <th>Hardware</th>
+        <td>Macbook pro</td>
+      </tr>
+      <tr>
+        <th>Live Directed Session</th>
+        <td>Zoom, Discord or other readily available program</td>
+      </tr>
+      <tr>
+        <th>Booth</th>
+        <td>Sound treated home studio</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<section id="contact" class="min-h-[50dvh] bg-base-200">
   <div class="hero-content flex-col justify-start">
     <div class="max-w-md text-center">
       <h2 class="text-3xl font-bold">Contact</h2>
