@@ -8,7 +8,7 @@
   $: id = embed.match(/tracks\/(\d+)\b/)?.[1];
   $: params = new URLSearchParams({
     url: `https://api.soundcloud.com/tracks/${id}`,
-    color: "7480ff",
+    color: "ef9995",
     auto_play: "false",
     hide_related: "false",
     show_comments: "false",
