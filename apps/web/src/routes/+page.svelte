@@ -80,7 +80,7 @@
     <table class="table">
       <tr>
         <th>Mic</th>
-        <td>RODE NT1</td>
+        <td>RODE NT</td>
       </tr>
       <tr>
         <th>Software</th>
