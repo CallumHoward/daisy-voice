@@ -15,7 +15,9 @@
   </a>
 {/if}
 
-<main class="flex flex-col justify-center">
+<main
+  class="flex flex-col justify-center [&>section:nth-child(odd)]:bg-base-200"
+>
   <slot />
 </main>
 
