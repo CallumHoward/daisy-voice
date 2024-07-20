@@ -35,7 +35,7 @@ export default defineType({
       title: "Rating 0-5",
       type: "number",
       initialValue: 5,
-      validation: (Rule) => Rule.min(0).max(5),
+      validation: (Rule) => Rule.min(0).max(5).integer(),
     }),
     defineField({
       name: "content",
