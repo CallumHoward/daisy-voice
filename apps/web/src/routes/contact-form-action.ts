@@ -2,12 +2,6 @@ import { sendMail } from "$lib/server/email/email";
 import { getErrorMessage } from "$lib/utils/error";
 import { fail } from "@sveltejs/kit";
 
-type Data = {
-  success: boolean;
-  errors: Record<string, string>;
-  missing?: string[];
-};
-
 type Args = {
   request: Request;
 };
