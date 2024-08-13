@@ -124,7 +124,7 @@ export type Testimonial = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-  rating?: number;
+  rating: number;
   content: BlockContent;
   orderRank?: string;
 };
