@@ -4,14 +4,33 @@
   import Demos from "./sections/demos.svelte";
   import Hero from "./sections/hero.svelte";
   import Testimonials from "./sections/testimonials.svelte";
+  import type { SvelteComponent } from "svelte";
 
   export let data: PageData;
+
+  const orderedSectionKeys = [
+    "hero",
+    "demos",
+    "testimonials",
+    "contact",
+  ] as const;
+  type SectionKey = (typeof orderedSectionKeys)[number];
+
+  type Props = {
+    data?: PageData;
+  };
+
+  const sectionComponents: Record<SectionKey, typeof SvelteComponent<Props>> = {
+    hero: Hero,
+    demos: Demos,
+    testimonials: Testimonials,
+    contact: Contact,
+  } as const;
 </script>
 
-<Hero />
-<Demos {data} />
-<Testimonials {data} />
-<Contact />
+{#each orderedSectionKeys as sectionKey}
+  <svelte:component this={sectionComponents[sectionKey]} {data} />
+{/each}
 
 <style>
   :global(section) {
