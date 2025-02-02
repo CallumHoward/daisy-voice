@@ -4,19 +4,27 @@
   import { urlFor } from "$lib/sanity/image";
   import { PortableText } from "@portabletext/svelte";
   import type { PageData } from "../$types";
+  import type { BlockContent } from "$lib/sanity/generated-types";
+  import { stegaClean } from "@sanity/client/stega";
 
   export let name: string;
   export let data: PageData;
+  export let content: BlockContent | undefined;
 
   const testimonialsRes = useQuery(data.testimonials);
 
   $: ({ data: testimonials } = $testimonialsRes);
-  $: id = name.toLowerCase().replace(/\s/g, "-");
+  $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
 </script>
 
 <section {id} class="min-h-[50dvh]">
   <div class="hero-content flex-col justify-start overflow-hidden">
     <h2 class="mb-16 text-center text-3xl font-bold">Testimonials</h2>
+    {#if content}
+      <p class="mb-6 py-6">
+        <PortableText components={{}} value={content} />
+      </p>
+    {/if}
     {#if testimonials?.length}
       <div class="carousel w-full gap-8 px-4">
         {#each testimonials as testimonial}

@@ -2,11 +2,16 @@
   import { enhance } from "$app/forms";
   import TextArea from "../../components/TextArea.svelte";
   import type { ActionData } from "../$types";
+  import type { BlockContent } from "$lib/sanity/generated-types";
+  import { PortableText } from "@portabletext/svelte";
+  import { stegaClean } from "@sanity/client/stega";
 
   let form: ActionData;
-  export let name: string;
 
-  $: id = name.toLowerCase().replace(/\s/g, "-");
+  export let name: string;
+  export let content: BlockContent | undefined;
+
+  $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
 </script>
 
 <section {id} class="min-h-[50dvh]">
@@ -14,8 +19,8 @@
     <div class="max-w-md text-center">
       <h2 class="text-3xl font-bold">Contact</h2>
       <p class="mb-6 py-6">
-        {#if !form?.success}
-          Make an enquiry and I'll get back to you ASAP!
+        {#if !form?.success && content}
+          <PortableText components={{}} value={content} />
         {:else}
           Thanks for reaching out! I'll get back to you soon.
         {/if}

@@ -42,4 +42,13 @@ export default defineType({
     }),
     orderRankField({ type: "section" }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "type",
+    },
+    prepare(selection) {
+      return selection;
+    },
+  },
 });
