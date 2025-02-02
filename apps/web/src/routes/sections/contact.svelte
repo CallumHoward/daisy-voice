@@ -6,7 +6,7 @@
   import { PortableText } from "@portabletext/svelte";
   import { stegaClean } from "@sanity/client/stega";
 
-  let form: ActionData;
+  export let form: ActionData | undefined;
 
   export let name: string;
   export let content: BlockContent | undefined;
