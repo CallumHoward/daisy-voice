@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { useQuery } from "@sanity/svelte-loader";
   import type { PageData } from "./$types";
   import Contact from "./sections/contact.svelte";
   import Demos from "./sections/demos.svelte";
@@ -8,19 +9,17 @@
 
   export let data: PageData;
 
-  const orderedSectionKeys = [
-    "hero",
-    "demos",
-    "testimonials",
-    "contact",
-  ] as const;
-  type SectionKey = (typeof orderedSectionKeys)[number];
+  const sectionsRes = useQuery(data.sections);
+
+  $: ({ data: sections } = $sectionsRes);
+
+  $: orderedSectionKeys = sections?.map((section) => section.id) ?? [];
 
   type Props = {
     data?: PageData;
   };
 
-  const sectionComponents: Record<SectionKey, typeof SvelteComponent<Props>> = {
+  const sectionComponents: Record<string, typeof SvelteComponent<Props>> = {
     hero: Hero,
     demos: Demos,
     testimonials: Testimonials,
@@ -29,7 +28,9 @@
 </script>
 
 {#each orderedSectionKeys as sectionKey}
-  <svelte:component this={sectionComponents[sectionKey]} {data} />
+  {#if sectionKey in sectionComponents}
+    <svelte:component this={sectionComponents[sectionKey]} {data} />
+  {/if}
 {/each}
 
 <style>

@@ -74,6 +74,16 @@ export type Slug = {
   source?: string;
 };
 
+export type Section = {
+  _id: string;
+  _type: "section";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  id: string;
+  orderRank?: string;
+};
+
 export type Track = {
   _id: string;
   _type: "track";
@@ -186,3 +196,5 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
+

@@ -7,3 +7,5 @@ export const postsQuery = groq`*[_type == "post" && defined(slug.current)] | ord
 export const testimonialsQuery = groq`*[_type == "testimonial"] | order(orderRank)`;
 
 export const tracksQuery = groq`*[_type == "track"] | order(orderRank)`;
+
+export const sectionsQuery = groq`*[_type == "section"] | order(orderRank)`;
