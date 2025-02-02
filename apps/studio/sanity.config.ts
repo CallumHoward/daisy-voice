@@ -21,6 +21,13 @@ export default defineConfig({
           .title("Content")
           .items([
             orderableDocumentListDeskItem({
+              type: "section",
+              title: "Section",
+              icon: FolderIcon,
+              S,
+              context,
+            }),
+            orderableDocumentListDeskItem({
               type: "testimonial",
               title: "Testimonial",
               icon: FolderIcon,
