@@ -3,14 +3,16 @@
   import type { PageData } from "../$types";
   import SoundCloudTrack from "../../components/SoundCloudTrack.svelte";
 
+  export let name: string;
   export let data: PageData;
 
   const tracksRes = useQuery(data.tracks);
 
   $: ({ data: tracks } = $tracksRes);
+  $: id = name.toLowerCase().replace(/\s/g, "-");
 </script>
 
-<section id="demos" class="min-h-[50dvh]">
+<section {id} class="min-h-[50dvh]">
   <div class="hero-content flex-col justify-start overflow-hidden text-center">
     <h2 class="mb-16 text-center text-3xl font-bold">Demos</h2>
     {#if tracks?.length}

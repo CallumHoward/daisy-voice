@@ -5,14 +5,16 @@
   import { PortableText } from "@portabletext/svelte";
   import type { PageData } from "../$types";
 
+  export let name: string;
   export let data: PageData;
 
   const testimonialsRes = useQuery(data.testimonials);
 
   $: ({ data: testimonials } = $testimonialsRes);
+  $: id = name.toLowerCase().replace(/\s/g, "-");
 </script>
 
-<section id="testimonials" class="min-h-[50dvh]">
+<section {id} class="min-h-[50dvh]">
   <div class="hero-content flex-col justify-start overflow-hidden">
     <h2 class="mb-16 text-center text-3xl font-bold">Testimonials</h2>
     {#if testimonials?.length}

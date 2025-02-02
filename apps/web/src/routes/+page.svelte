@@ -6,6 +6,7 @@
   import Hero from "./sections/hero.svelte";
   import Testimonials from "./sections/testimonials.svelte";
   import type { SvelteComponent } from "svelte";
+  import type { BlockContent } from "$lib/sanity/generated-types";
 
   export let data: PageData;
 
@@ -13,13 +14,16 @@
 
   $: ({ data: sections } = $sectionsRes);
 
-  $: orderedSectionKeys = sections?.map((section) => section.id) ?? [];
-
-  type Props = {
+  type SectionProps = {
+    name: string;
+    content?: BlockContent;
     data?: PageData;
   };
 
-  const sectionComponents: Record<string, typeof SvelteComponent<Props>> = {
+  const sectionComponents: Record<
+    string,
+    typeof SvelteComponent<SectionProps>
+  > = {
     hero: Hero,
     demos: Demos,
     testimonials: Testimonials,
@@ -27,9 +31,9 @@
   } as const;
 </script>
 
-{#each orderedSectionKeys as sectionKey}
-  {#if sectionKey in sectionComponents}
-    <svelte:component this={sectionComponents[sectionKey]} {data} />
+{#each sections as { type, enabled, name, content }}
+  {#if type in sectionComponents && enabled}
+    <svelte:component this={sectionComponents[type]} {name} {content} {data} />
   {/if}
 {/each}
 

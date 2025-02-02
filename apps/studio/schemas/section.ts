@@ -7,13 +7,38 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
-      name: "id",
-      title: "ID",
+      name: "name",
+      title: "Name",
       type: "string",
-      validation: (Rule) =>
-        Rule.required()
-          .lowercase()
-          .regex(/^[a-z][a-z0-9-]+$/),
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "enabled",
+      title: "Enabled",
+      description: "This section will be hidden if disabled",
+      type: "boolean",
+      initialValue: true,
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "type",
+      title: "Section Type",
+      type: "string",
+      options: {
+        list: [
+          { title: "hero", value: "hero" },
+          { title: "demos", value: "demos" },
+          { title: "testimonials", value: "testimonials" },
+          { title: "contact", value: "contact" },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "content",
+      title: "Text Content",
+      description: "Text content for the section",
+      type: "blockContent",
     }),
     orderRankField({ type: "section" }),
   ],

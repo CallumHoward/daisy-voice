@@ -9,13 +9,11 @@ import type { Actions, PageServerLoad } from "./$types";
 import { handleContactFromAction } from "./contact-form-action";
 
 type QueryResponseTypes = Testimonial[] | Track[] | Section[];
-type Data = Record<
-  string,
-  {
-    query: string;
-    options: { initial: QueryResponseInitial<QueryResponseTypes> };
-  }
->;
+type DataEntry = {
+  query: string;
+  options: { initial: QueryResponseInitial<QueryResponseTypes> };
+};
+type Data = Record<string, DataEntry>;
 
 export const load: PageServerLoad = async (event) => {
   const { loadQuery } = event.locals;

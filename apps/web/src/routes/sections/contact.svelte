@@ -4,9 +4,12 @@
   import type { ActionData } from "../$types";
 
   let form: ActionData;
+  export let name: string;
+
+  $: id = name.toLowerCase().replace(/\s/g, "-");
 </script>
 
-<section id="contact" class="min-h-[50dvh]">
+<section {id} class="min-h-[50dvh]">
   <div class="hero-content flex-col justify-start">
     <div class="max-w-md text-center">
       <h2 class="text-3xl font-bold">Contact</h2>
