@@ -1,8 +1,6 @@
 <script lang="ts">
   import StarRating from "./StarRating.svelte";
-  import type { Rating } from "./types";
-
-  export let rating: Rating;
+  export let rating: number;
   export let avatarSrc: string;
   export let name: string;
   export let from: string | undefined;
