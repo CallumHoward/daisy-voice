@@ -15,6 +15,7 @@
     "start": "sanity start"
   },
   "dependencies": {
+    "@sanity/icons": "^3.3.1",
     "@sanity/orderable-document-list": "^1.2.1",
     "@sanity/vision": "^3.40.0",
     "@sanity/icons":"^3.3.1",
