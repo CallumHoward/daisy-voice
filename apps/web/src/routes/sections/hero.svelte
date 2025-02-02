@@ -1,4 +1,4 @@
-<section id="intro" class="hero aspect-square max-h-screen">
+<section id="hero" class="hero aspect-square max-h-screen">
   <div class="hero-content max-w-lg text-center">
     <div class="max-w-md">
       <h1 class="text-5xl font-bold">Need a Voice Artist?</h1>
