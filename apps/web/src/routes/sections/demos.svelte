@@ -5,8 +5,10 @@
   import type { BlockContent } from "$lib/sanity/generated-types";
   import { PortableText } from "@portabletext/svelte";
   import { stegaClean } from "@sanity/client/stega";
+  import InlineImage from "../../components/InlineImage.svelte";
 
   export let name: string;
+  export let heading: string = "Demos";
   export let data: PageData;
   export let content: BlockContent | undefined;
 
@@ -18,10 +20,13 @@
 
 <section {id} class="min-h-[50dvh]">
   <div class="hero-content flex-col justify-start overflow-hidden text-center">
-    <h2 class="mb-16 text-center text-3xl font-bold">Demos</h2>
+    <h2 class="mb-16 text-center text-3xl font-bold">{heading}</h2>
     {#if content}
       <p class="mb-6 py-6">
-        <PortableText components={{}} value={content} />
+        <PortableText
+          components={{ types: { image: InlineImage } }}
+          value={content}
+        />
       </p>
     {/if}
     {#if tracks?.length}

@@ -9,6 +9,7 @@
   export let form: ActionData | undefined;
 
   export let name: string;
+  export let heading: string = "Contact";
   export let content: BlockContent | undefined;
 
   $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
@@ -17,7 +18,7 @@
 <section {id} class="min-h-[50dvh]">
   <div class="hero-content flex-col justify-start">
     <div class="max-w-md text-center">
-      <h2 class="text-3xl font-bold">Contact</h2>
+      <h2 class="text-3xl font-bold">{heading}</h2>
       <p class="mb-6 py-6">
         {#if !form?.success && content}
           <PortableText components={{}} value={content} />

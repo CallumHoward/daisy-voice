@@ -6,8 +6,10 @@
   import type { PageData } from "../$types";
   import type { BlockContent } from "$lib/sanity/generated-types";
   import { stegaClean } from "@sanity/client/stega";
+  import InlineImage from "../../components/InlineImage.svelte";
 
   export let name: string;
+  export let heading: string = "Testimonials";
   export let data: PageData;
   export let content: BlockContent | undefined;
 
@@ -19,10 +21,13 @@
 
 <section {id} class="min-h-[50dvh]">
   <div class="hero-content flex-col justify-start overflow-hidden">
-    <h2 class="mb-16 text-center text-3xl font-bold">Testimonials</h2>
+    <h2 class="mb-16 text-center text-3xl font-bold">{heading}</h2>
     {#if content}
       <p class="mb-6 py-6">
-        <PortableText components={{}} value={content} />
+        <PortableText
+          components={{ types: { image: InlineImage } }}
+          value={content}
+        />
       </p>
     {/if}
     {#if testimonials?.length}

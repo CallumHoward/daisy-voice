@@ -9,6 +9,8 @@ export default defineType({
     defineField({
       name: "name",
       title: "Name",
+      description:
+        "A name for this section, for reference only (not shown on page)",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
@@ -30,13 +32,22 @@ export default defineType({
           { title: "demos", value: "demos" },
           { title: "testimonials", value: "testimonials" },
           { title: "contact", value: "contact" },
+          { title: "specs", value: "specs" },
+          { title: "custom", value: "custom" },
         ],
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "heading",
+      title: "Text Heading (optional)",
+      description:
+        "Text to appear as a heading for the section. Leave blank for no heading.",
+      type: "string",
+    }),
+    defineField({
       name: "content",
-      title: "Text Content",
+      title: "Text Content (optional)",
       description: "Text content for the section",
       type: "blockContent",
     }),
@@ -46,9 +57,13 @@ export default defineType({
     select: {
       title: "name",
       subtitle: "type",
+      enabled: "enabled",
     },
-    prepare(selection) {
-      return selection;
+    prepare({ title, subtitle, enabled }) {
+      return {
+        title,
+        subtitle: `${subtitle} ${enabled ? "" : "(hidden)"}`,
+      };
     },
   },
 });

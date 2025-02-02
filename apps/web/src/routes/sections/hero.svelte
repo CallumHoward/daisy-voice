@@ -2,8 +2,10 @@
   import type { BlockContent } from "$lib/sanity/generated-types";
   import { PortableText } from "@portabletext/svelte";
   import { stegaClean } from "@sanity/client/stega";
+  import InlineImage from "../../components/InlineImage.svelte";
 
   export let name: string;
+  export let heading: string = "Need a Voice Artist?";
   export let content: BlockContent | undefined;
 
   $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
@@ -12,10 +14,13 @@
 <section {id} class="hero aspect-square max-h-screen">
   <div class="hero-content max-w-lg text-center">
     <div class="max-w-md">
-      <h1 class="text-5xl font-bold">Need a Voice Artist?</h1>
+      <h1 class="text-5xl font-bold">{heading}</h1>
       {#if content}
         <p class="mb-6 py-6">
-          <PortableText components={{}} value={content} />
+          <PortableText
+            components={{ types: { image: InlineImage } }}
+            value={content}
+          />
         </p>
       {/if}
       <a href="#contact" class="btn btn-primary uppercase">Contact</a>
