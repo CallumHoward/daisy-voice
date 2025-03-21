@@ -5,13 +5,6 @@ const config = {
   theme: {
     extend: {},
   },
-
-  plugins: [require("daisyui")],
-
-  daisyui: {
-    themes: ["retro"],
-    logs: false,
-  },
 };
 
 module.exports = config;
