@@ -15,7 +15,7 @@
   $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
 </script>
 
-<section {id} class="min-h-[50dvh]">
+<section {id} class="flex min-h-[50dvh]">
   <div class="hero-content flex-col justify-start">
     <div class="max-w-md text-center">
       <h2 class="text-3xl font-bold">{heading}</h2>
@@ -28,8 +28,12 @@
       </p>
     </div>
     {#if !form?.success}
-      <form method="POST" use:enhance class="form-control w-full gap-4">
-        <span class="form-control gap-4 sm:flex-row">
+      <form
+        method="POST"
+        use:enhance
+        class="form-control flex w-full flex-col gap-4"
+      >
+        <span class="form-control flex gap-3 sm:flex-row">
           <input
             type="text"
             name="first_name"
@@ -53,7 +57,7 @@
           autocomplete="email"
           maxlength="64"
           required
-          class="input input-primary"
+          class="input input-primary w-full"
         />
         <TextArea
           name="message"

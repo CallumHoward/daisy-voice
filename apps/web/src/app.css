@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: caramellatte --default;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
