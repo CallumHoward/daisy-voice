@@ -2,7 +2,7 @@
   import { isPreviewing, VisualEditing } from "@sanity/visual-editing/svelte";
   import { page } from "$app/stores";
   import LiveMode from "../components/LiveMode.svelte";
-  import "../app.pcss";
+  import "../app.css";
 </script>
 
 {#if $isPreviewing}
@@ -16,7 +16,7 @@
 {/if}
 
 <main
-  class="flex flex-col justify-center [&>section:nth-child(odd)]:bg-base-200"
+  class="[&>section:nth-child(odd)]:bg-base-200 flex flex-col justify-center"
 >
   <slot />
 </main>
@@ -26,7 +26,7 @@
   <LiveMode />
 {/if}
 
-<style>
+<style lang="postcss">
   .preview-toggle {
     backdrop-filter: blur(12px);
     border-radius: 0.25rem;
