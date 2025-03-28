@@ -11,7 +11,7 @@
   $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
 </script>
 
-<section {id} class="hero grid aspect-square max-h-screen">
+<section {id} class="hero !grid aspect-square max-h-screen">
   <div class="hero-content max-w-lg text-center">
     <div class="max-w-md">
       <h1 class="text-5xl font-bold">{heading}</h1>

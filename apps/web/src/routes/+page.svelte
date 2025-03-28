@@ -52,6 +52,7 @@
   :global(section) {
     padding-block: 4rem;
     width: 100%;
+    display: flex;
     justify-content: center;
   }
 </style>
