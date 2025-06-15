@@ -23,7 +23,7 @@
   );
 </script>
 
-<Section {id} {heading}>
+<Section {id} {heading} footerDescription>
   <ul
     class="list bg-base-100 rounded-box max-h-96 overflow-y-scroll shadow-md"
     slot="main"
