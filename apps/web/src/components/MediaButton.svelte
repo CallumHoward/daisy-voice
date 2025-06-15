@@ -46,7 +46,7 @@
   preload="metadata"
 />
 
-<button class="btn btn-circle btn-ghost" on:click={togglePlay}>
+<button class="btn btn-circle btn-ghost" on:click={togglePlay} aria-label={playing ? 'Pause track' : 'Play track'}>
   {#if playing}
     <div
       class="radial-progress"
