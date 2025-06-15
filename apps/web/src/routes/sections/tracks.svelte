@@ -17,8 +17,9 @@
   $: ({ data: tracks } = $tracksRes);
   $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
 
-  $: filteredTracks = tracks?.filter((track) => 
-    stegaClean(track.section).toLowerCase().replace(/\s/g, "-") === id
+  $: filteredTracks = tracks?.filter(
+    (track) =>
+      stegaClean(track.section).toLowerCase().replace(/\s/g, "-") === id,
   );
 </script>
 
