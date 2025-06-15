@@ -13,7 +13,7 @@
   export let data: PageData;
   export let content: BlockContent | undefined;
 
-  const tracksRes = useQuery(data.tracks);
+  const tracksRes = useQuery(data.audioTracks);
   $: ({ data: tracks } = $tracksRes);
   $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
 </script>
@@ -28,14 +28,14 @@
   />
 
   <ul
-    class="list bg-base-100 rounded-box max-h-96 overflow-scroll shadow-md"
+    class="list bg-base-100 rounded-box max-h-96 overflow-y-scroll shadow-md"
     slot="main"
   >
     {#if !tracks?.length}
       No demos yet
     {/if}
 
-    {#each tracks as { title }}
+    {#each tracks as { title, subtitle, url }}
       <li class="list-row">
         <div>
           <img
@@ -47,10 +47,10 @@
         <div>
           <div>{title}</div>
           <div class="text-xs font-semibold uppercase opacity-60">
-            Audio Samples
+            {subtitle}
           </div>
         </div>
-        <MediaButton />
+        <MediaButton audioSrc={url} />
       </li>
     {/each}
   </ul>

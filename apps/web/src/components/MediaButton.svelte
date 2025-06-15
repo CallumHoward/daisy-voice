@@ -46,7 +46,7 @@
   preload="metadata"
 />
 
-<button class="btn btn-square btn-ghost" on:click={togglePlay}>
+<button class="btn btn-circle btn-ghost" on:click={togglePlay}>
   {#if playing}
     <div
       class="radial-progress"
