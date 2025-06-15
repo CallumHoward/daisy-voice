@@ -9,7 +9,7 @@
   import Section from "../../components/Section.svelte";
 
   export let name: string;
-  export let heading: string = "Demos";
+  export let heading: string;
   export let data: PageData;
   export let content: BlockContent | undefined;
 
