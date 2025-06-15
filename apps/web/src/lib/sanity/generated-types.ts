@@ -112,6 +112,7 @@ export type AudioTrack = {
   _rev: string;
   title: string;
   subtitle: string;
+  section: string;
   audioFile: {
     asset?: {
       _ref: string;

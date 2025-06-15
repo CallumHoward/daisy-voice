@@ -16,6 +16,8 @@
   const tracksRes = useQuery(data.audioTracks);
   $: ({ data: tracks } = $tracksRes);
   $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
+
+  $: filteredTracks = tracks?.filter((track) => track.section === id);
 </script>
 
 <Section {id} {heading}>
@@ -31,11 +33,11 @@
     class="list bg-base-100 rounded-box max-h-96 overflow-y-scroll shadow-md"
     slot="main"
   >
-    {#if !tracks?.length}
+    {#if !filteredTracks?.length}
       No demos yet
     {/if}
 
-    {#each tracks as { title, subtitle, url } (url)}
+    {#each filteredTracks as { title, subtitle, url } (url)}
       <li class="list-row">
         <div>
           <img

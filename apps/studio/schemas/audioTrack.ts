@@ -20,6 +20,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "section",
+      title: "Section",
+      description: "Type a section, it will only show up in this section",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "audioFile",
       title: "Audio File",
       description: "MP3 audio file for this track",
