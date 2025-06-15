@@ -14,6 +14,8 @@
         <p class="mb-6 py-6">
           <slot name="description" />
         </p>
+      {:else if heading}
+        <p class="mb-6 py-6" />
       {/if}
     </div>
     <slot name="main" />

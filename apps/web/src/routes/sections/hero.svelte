@@ -26,7 +26,7 @@
       <a href="#contact" class="btn btn-primary uppercase">Contact</a>
     </div>
   </div>
-  <a href="#demos" class="mt-auto">
+  <a href="#tracks-audiobook" class="mt-auto">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="h-6 w-6 stroke-current"
