@@ -21,14 +21,6 @@
 </script>
 
 <Section {id} {heading}>
-  <PortableText
-    slot="description"
-    components={{
-      types: { image: InlineImage },
-    }}
-    value={content}
-  />
-
   <ul
     class="list bg-base-100 rounded-box max-h-96 overflow-y-scroll shadow-md"
     slot="main"
@@ -56,4 +48,12 @@
       </li>
     {/each}
   </ul>
+
+  <PortableText
+    slot="description"
+    components={{
+      types: { image: InlineImage },
+    }}
+    value={content}
+  />
 </Section>
