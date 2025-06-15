@@ -36,7 +36,14 @@ export default defineConfig({
             }),
             orderableDocumentListDeskItem({
               type: "track",
-              title: "Track",
+              title: "Track (SoundCloud)",
+              icon: FolderIcon,
+              S,
+              context,
+            }),
+            orderableDocumentListDeskItem({
+              type: "audioTrack",
+              title: "Audio Track",
               icon: FolderIcon,
               S,
               context,

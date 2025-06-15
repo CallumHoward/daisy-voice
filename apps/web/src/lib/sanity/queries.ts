@@ -8,4 +8,6 @@ export const testimonialsQuery = groq`*[_type == "testimonial"] | order(orderRan
 
 export const tracksQuery = groq`*[_type == "track"] | order(orderRank)`;
 
+export const audioTracksQuery = groq`*[_type == "audioTrack"] { ..., "url": audioFile.asset->url } | order(orderRank)`;
+
 export const sectionsQuery = groq`*[_type == "section"] | order(orderRank)`;

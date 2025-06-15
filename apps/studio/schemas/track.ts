@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "track",
-  title: "Track",
+  title: "Track (SoundCloud)",
   type: "document",
   fields: [
     defineField({

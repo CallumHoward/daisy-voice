@@ -39,28 +39,6 @@ export type SanityImageDimensions = {
   aspectRatio?: number;
 };
 
-export type SanityFileAsset = {
-  _id: string;
-  _type: "sanity.fileAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  source?: SanityAssetSourceData;
-};
-
 export type Geopoint = {
   _type: "geopoint";
   lat?: number;
@@ -82,7 +60,14 @@ export type Section = {
   _rev: string;
   name: string;
   enabled: boolean;
-  type: "hero" | "demos" | "testimonials" | "contact" | "specs" | "custom";
+  type:
+    | "hero"
+    | "demos"
+    | "tracks"
+    | "testimonials"
+    | "contact"
+    | "specs"
+    | "custom";
   heading?: string;
   content?: Array<
     | {
@@ -117,6 +102,48 @@ export type Section = {
       }
   >;
   orderRank?: string;
+};
+
+export type AudioTrack = {
+  _id: string;
+  _type: "audioTrack";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  subtitle: string;
+  audioFile: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    _type: "file";
+  };
+  orderRank?: string;
+};
+
+export type SanityFileAsset = {
+  _id: string;
+  _type: "sanity.fileAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
 };
 
 export type Track = {
@@ -245,3 +272,5 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 export declare const internalGroqTypeReferenceTo: unique symbol;
+
+
