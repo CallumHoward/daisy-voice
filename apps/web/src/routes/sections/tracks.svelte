@@ -35,7 +35,7 @@
       No demos yet
     {/if}
 
-    {#each tracks as { title, subtitle, url }}
+    {#each tracks as { title, subtitle, url } (url)}
       <li class="list-row">
         <div>
           <img
