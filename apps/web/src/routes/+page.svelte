@@ -3,6 +3,7 @@
   import type { PageData } from "./$types";
   import Contact from "./sections/contact.svelte";
   import Demos from "./sections/demos.svelte";
+  import Tracks from "./sections/tracks.svelte";
   import Hero from "./sections/hero.svelte";
   import Testimonials from "./sections/testimonials.svelte";
   import Specs from "./sections/specs.svelte";
@@ -29,6 +30,7 @@
   > = {
     hero: Hero,
     demos: Demos,
+    tracks: Tracks,
     testimonials: Testimonials,
     contact: Contact,
     specs: Specs,

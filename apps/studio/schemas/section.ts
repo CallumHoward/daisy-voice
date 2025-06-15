@@ -30,6 +30,7 @@ export default defineType({
         list: [
           { title: "hero", value: "hero" },
           { title: "demos", value: "demos" },
+          { title: "tracks", value: "tracks" },
           { title: "testimonials", value: "testimonials" },
           { title: "contact", value: "contact" },
           { title: "specs", value: "specs" },

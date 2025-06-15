@@ -60,7 +60,14 @@ export type Section = {
   _rev: string;
   name: string;
   enabled: boolean;
-  type: "hero" | "demos" | "testimonials" | "contact" | "specs" | "custom";
+  type:
+    | "hero"
+    | "demos"
+    | "tracks"
+    | "testimonials"
+    | "contact"
+    | "specs"
+    | "custom";
   heading?: string;
   content?: Array<
     | {
