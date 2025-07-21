@@ -12,11 +12,11 @@
 </script>
 
 <section {id} class="hero !grid aspect-square max-h-screen">
-  <div class="hero-content max-w-lg text-center">
-    <div class="max-w-md">
+  <div class="hero-content max-w-3xl text-center">
+    <div class="max-w-3xl">
       <h1 class="text-5xl font-bold">{heading}</h1>
       {#if content}
-        <p class="mb-6 py-6">
+        <p class="mb-6 flex flex-col py-6">
           <PortableText
             components={{ types: { image: InlineImage } }}
             value={content}

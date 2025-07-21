@@ -6,7 +6,7 @@
 
 <section {id} class="min-h-[50dvh]">
   <div class="hero-content flex-col justify-start">
-    <div class="max-w-md text-center">
+    <div class="max-w-3xl text-center">
       {#if heading}
         <h2 class="text-3xl font-bold">{heading}</h2>
       {/if}
