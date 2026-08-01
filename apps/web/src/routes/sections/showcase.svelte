@@ -160,7 +160,7 @@
       >
         <h3
           id={`${id}-${category.id}-heading`}
-          class="showcase-column-heading mb-4 text-xl font-bold"
+          class="showcase-column-heading mb-4 text-center text-xl font-bold"
         >
           {category.title}
         </h3>
@@ -293,7 +293,6 @@
     flex: none;
     scroll-snap-align: center;
     scroll-snap-stop: always;
-    transform-origin: center;
     width: 100%;
   }
 
@@ -322,17 +321,6 @@
     }
   }
 
-  @keyframes settle-card {
-    from {
-      opacity: 0.45;
-      transform: translateY(1.5rem) scale(0.94);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
   @keyframes slide-category-out {
     to {
       opacity: 0;
@@ -353,14 +341,6 @@
 
   :global(::view-transition-new(showcase-category)) {
     animation: slide-category-in 240ms ease-out both;
-  }
-
-  @supports (animation-timeline: view()) {
-    .showcase-card {
-      animation: settle-card linear both;
-      animation-range: entry 0% entry 90%;
-      animation-timeline: view(block);
-    }
   }
 
   @media (min-width: 64rem) {

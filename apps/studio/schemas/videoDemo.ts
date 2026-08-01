@@ -8,7 +8,7 @@ export default defineType({
   fields: [
     defineField({
       name: "title",
-      title: "Title",
+      title: "Internal name",
       description:
         "Used to identify this video in Studio and by assistive technology",
       type: "string",
@@ -30,8 +30,8 @@ export default defineType({
     }),
     defineField({
       name: "description",
-      title: "Description",
-      description: "A short, one-line description shown below the video",
+      title: "Title",
+      description: "A short, one-line title shown below the video",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
