@@ -7,9 +7,14 @@ type SanityImage = Omit<Image, "crop"> & { crop?: SanityImageCrop };
 export type VideoDemo = {
   _id: string;
   title: string;
-  category: "audiobooks" | "game" | "animation" | "ivr";
   url: string;
   poster?: SanityImage;
+};
+
+export type VideoDemoCategory = {
+  _id: string;
+  title: string;
+  demos: VideoDemo[];
 };
 
 export const postQuery = groq`*[_type == "post" && slug.current == $slug][0]`;
@@ -22,6 +27,17 @@ export const tracksQuery = groq`*[_type == "track"] | order(orderRank)`;
 
 export const audioTracksQuery = groq`*[_type == "audioTrack"] { ..., "url": audioFile.asset->url } | order(orderRank)`;
 
-export const videoDemosQuery = groq`*[_type == "videoDemo"] { ..., "url": videoFile.asset->url } | order(orderRank)`;
+export const videoDemoCategoriesQuery = groq`
+  *[_type == "videoDemoCategory" && enabled != false] | order(orderRank) {
+    _id,
+    title,
+    "demos": *[_type == "videoDemo" && category._ref == ^._id] | order(orderRank) {
+      _id,
+      title,
+      "url": videoFile.asset->url,
+      poster
+    }
+  }
+`;
 
 export const sectionsQuery = groq`*[_type == "section"] | order(orderRank)`;

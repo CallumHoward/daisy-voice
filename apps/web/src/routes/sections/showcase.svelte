@@ -12,23 +12,10 @@
   export let content: BlockContent | undefined;
   export let data: PageData;
 
-  const categories = [
-    { id: "audiobooks", title: "Audiobooks" },
-    { id: "game", title: "Game" },
-    { id: "animation", title: "Animation" },
-    { id: "ivr", title: "IVR" },
-  ] as const;
+  const videoDemoCategoriesRes = useQuery(data.videoDemoCategories);
 
-  const videoDemosRes = useQuery(data.videoDemos);
-
-  $: ({ data: videoDemos } = $videoDemosRes);
+  $: ({ data: categories } = $videoDemoCategoriesRes);
   $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
-
-  function demosFor(category: (typeof categories)[number]["id"]) {
-    return (
-      videoDemos?.filter((demo) => stegaClean(demo.category) === category) ?? []
-    );
-  }
 
   function pauseOtherVideos(event: Event) {
     const currentVideo = event.currentTarget as HTMLVideoElement;
@@ -159,84 +146,85 @@
     </div>
   {/if}
 
-  <div
-    class="tabs tabs-box showcase-tabs"
-    role="radiogroup"
-    aria-label="Video demo categories"
-  >
-    {#each categories as category, index (category.id)}
-      <input
-        id={`${id}-${category.id}`}
-        class="tab"
-        type="radio"
-        name={`${id}-category`}
-        value={category.id}
-        aria-label={category.title}
-        aria-controls={`${id}-${category.id}-panel`}
-        checked={index === 0}
-      />
-    {/each}
-  </div>
-
-  <div class="showcase-grid">
-    {#each categories as category (category.id)}
-      <div
-        id={`${id}-${category.id}-panel`}
-        class={`showcase-column showcase-column--${category.id}`}
-        role="region"
-        aria-labelledby={`${id}-${category.id}-heading`}
-      >
-        <h3
-          id={`${id}-${category.id}-heading`}
-          class="showcase-column-heading mb-4 text-center text-xl font-bold"
+  {#if categories?.length}
+    <div
+      class="tabs tabs-box showcase-grid"
+      style={`--showcase-category-count: ${categories.length}`}
+      role="radiogroup"
+      aria-label="Video demo categories"
+    >
+      {#each categories as category, index (category._id)}
+        {@const categoryId = `${id}-${category._id}`}
+        <input
+          id={categoryId}
+          class="tab showcase-category-tab"
+          type="radio"
+          name={`${id}-category`}
+          value={category._id}
+          aria-label={category.title}
+          aria-controls={`${categoryId}-panel`}
+          checked={index === 0}
+        />
+        <div
+          id={`${categoryId}-panel`}
+          class="showcase-column"
+          role="region"
+          aria-labelledby={`${categoryId}-heading`}
         >
-          {category.title}
-        </h3>
-
-        <div class="showcase-carousel-mask">
-          <div
-            class="carousel carousel-vertical showcase-carousel"
-            use:manageVideoControls
+          <h3
+            id={`${categoryId}-heading`}
+            class="showcase-column-heading mb-4 text-center text-xl font-bold"
           >
-            {#each demosFor(category.id) as { _id, title, url, poster } (_id)}
-              {@const posterUrl = poster?.asset
-                ? urlFor(poster).width(1200).auto("format").url()
-                : undefined}
-              <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-              <article
-                class="carousel-item showcase-card"
-                on:click={activateCard}
-              >
-                <div class="showcase-video-frame">
-                  <!-- svelte-ignore a11y-media-has-caption -->
-                  <video
-                    class="showcase-video"
-                    src={url}
-                    poster={posterUrl}
-                    aria-label={title}
-                    controls
-                    playsinline
-                    preload="metadata"
-                    on:play={pauseOtherVideos}
-                  >
-                    Your browser does not support embedded video.
-                  </video>
-                </div>
-                <button
-                  type="button"
-                  class="block w-full cursor-pointer truncate px-1 pt-3 text-left text-sm font-medium"
+            {category.title}
+          </h3>
+
+          <div class="showcase-carousel-mask">
+            <div
+              class="carousel carousel-vertical showcase-carousel"
+              use:manageVideoControls
+            >
+              {#each category.demos as { _id, title, url, poster } (_id)}
+                {@const posterUrl = poster?.asset
+                  ? urlFor(poster).width(1200).auto("format").url()
+                  : undefined}
+                <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+                <article
+                  class="carousel-item showcase-card"
+                  on:click={activateCard}
                 >
-                  {title}
-                </button>
-              </article>
-            {:else}
-              <p class="py-8 text-sm opacity-60">No videos yet.</p>
-            {/each}
+                  <div class="showcase-video-frame">
+                    <!-- svelte-ignore a11y-media-has-caption -->
+                    <video
+                      class="showcase-video"
+                      src={url}
+                      poster={posterUrl}
+                      aria-label={title}
+                      controls
+                      playsinline
+                      preload="metadata"
+                      on:play={pauseOtherVideos}
+                    >
+                      Your browser does not support embedded video.
+                    </video>
+                  </div>
+                  <button
+                    type="button"
+                    class="block w-full cursor-pointer truncate px-1 pt-3 text-left text-sm font-medium"
+                  >
+                    {title}
+                  </button>
+                </article>
+              {:else}
+                <p class="py-8 text-sm opacity-60">No videos yet.</p>
+              {/each}
+            </div>
           </div>
         </div>
-      </div>
-    {/each}
-  </div>
+      {/each}
+    </div>
+  {:else}
+    <p class="py-8 text-center text-sm opacity-60">No video categories yet.</p>
+  {/if}
 </section>
 
 <style>
@@ -247,19 +235,19 @@
     width: 100%;
   }
 
-  .showcase-tabs {
-    align-self: center;
-    margin-bottom: 2rem;
-  }
-
   .showcase-grid {
     --showcase-enter-delay: 160ms;
     --showcase-enter-duration: 200ms;
     --showcase-exit-duration: 120ms;
 
+    background-color: transparent;
+    border-radius: 0;
     display: grid;
+    grid-auto-flow: row;
     margin-inline: auto;
     max-width: 96rem;
+    padding: 0;
+    position: relative;
     width: 100%;
   }
 
@@ -348,12 +336,35 @@
 
   @media (max-width: 63.999rem) {
     .showcase-grid {
+      grid-template-columns: repeat(
+        var(--showcase-category-count),
+        minmax(0, 1fr)
+      );
+      max-width: 28rem;
       overflow: hidden;
+    }
+
+    .showcase-grid::before {
+      background-color: var(--color-base-200);
+      border-radius: var(--radius-field);
+      block-size: 2.5rem;
+      content: "";
+      inset: 0 0 auto;
+      position: absolute;
+    }
+
+    .showcase-category-tab {
+      grid-row: 1;
+      min-width: 0;
+      width: 100%;
+      z-index: 1;
     }
 
     .showcase-column {
       display: block;
-      grid-area: 1 / 1;
+      grid-column: 1 / -1;
+      grid-row: 2;
+      margin-top: 2rem;
       opacity: 0;
       pointer-events: none;
       transform: translateX(0.75rem);
@@ -364,36 +375,22 @@
       visibility: hidden;
     }
 
-    .showcase-tabs .tab {
+    .showcase-category-tab {
       transition:
         background-color 150ms cubic-bezier(0.2, 0, 0, 1),
         color 150ms cubic-bezier(0.2, 0, 0, 1),
         scale 150ms cubic-bezier(0.2, 0, 0, 1);
     }
 
-    .showcase-tabs .tab:active {
+    .showcase-category-tab:active {
       scale: 0.96;
     }
 
-    .showcase-section:has(input[value="game"]:checked)
-      .showcase-column--audiobooks,
-    .showcase-section:has(input[value="animation"]:checked)
-      :is(.showcase-column--audiobooks, .showcase-column--game),
-    .showcase-section:has(input[value="ivr"]:checked)
-      :is(
-        .showcase-column--audiobooks,
-        .showcase-column--game,
-        .showcase-column--animation
-      ) {
+    .showcase-column:has(~ .showcase-category-tab:checked) {
       transform: translateX(-0.75rem);
     }
 
-    .showcase-section:has(input[value="audiobooks"]:checked)
-      .showcase-column--audiobooks,
-    .showcase-section:has(input[value="game"]:checked) .showcase-column--game,
-    .showcase-section:has(input[value="animation"]:checked)
-      .showcase-column--animation,
-    .showcase-section:has(input[value="ivr"]:checked) .showcase-column--ivr {
+    .showcase-category-tab:checked + .showcase-column {
       opacity: 1;
       pointer-events: auto;
       transform: translateX(0);
@@ -413,18 +410,23 @@
       padding-inline: 2rem;
     }
 
-    .showcase-tabs {
+    .showcase-category-tab,
+    .showcase-grid::before {
       display: none;
     }
 
     .showcase-grid {
       column-gap: 1.5rem;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(
+        var(--showcase-category-count),
+        minmax(0, 1fr)
+      );
     }
 
     .showcase-column {
       display: block;
       grid-area: auto;
+      margin-top: 0;
     }
 
     .showcase-column-heading {

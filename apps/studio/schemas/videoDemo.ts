@@ -17,15 +17,9 @@ export default defineType({
     defineField({
       name: "category",
       title: "Category",
-      type: "string",
-      options: {
-        list: [
-          { title: "Audiobooks", value: "audiobooks" },
-          { title: "Game", value: "game" },
-          { title: "Animation", value: "animation" },
-          { title: "IVR", value: "ivr" },
-        ],
-      },
+      description: "Controls which tab and column this video appears in",
+      type: "reference",
+      to: [{ type: "videoDemoCategory" }],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -48,7 +42,7 @@ export default defineType({
   preview: {
     select: {
       title: "title",
-      subtitle: "category",
+      subtitle: "category.title",
       media: "poster",
     },
   },

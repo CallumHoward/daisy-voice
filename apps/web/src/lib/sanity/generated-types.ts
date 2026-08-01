@@ -59,7 +59,12 @@ export type VideoDemo = {
   _updatedAt: string;
   _rev: string;
   title: string;
-  category: "audiobooks" | "game" | "animation" | "ivr";
+  category: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "videoDemoCategory";
+  };
   videoFile: {
     asset?: {
       _ref: string;
@@ -80,6 +85,17 @@ export type VideoDemo = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  orderRank?: string;
+};
+
+export type VideoDemoCategory = {
+  _id: string;
+  _type: "videoDemoCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  enabled: boolean;
   orderRank?: string;
 };
 
