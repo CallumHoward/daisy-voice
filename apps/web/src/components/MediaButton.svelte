@@ -57,8 +57,13 @@
   on:click={togglePlay}
   aria-label={playing ? "Pause track" : "Play track"}
 >
-  <span class="media-icon-stack" aria-hidden="true">
-    <span class:media-icon-hidden={playing} class="media-icon">
+  <span class="grid place-items-center" aria-hidden="true">
+    <span
+      class="col-start-1 row-start-1 transition-[filter,opacity,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none"
+      class:scale-25={playing}
+      class:blur-sm={playing}
+      class:opacity-0={playing}
+    >
       <svg
         class="size-[1.2em]"
         xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +78,12 @@
         >
       </svg>
     </span>
-    <span class:media-icon-hidden={!playing} class="media-icon">
+    <span
+      class="col-start-1 row-start-1 transition-[filter,opacity,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)] motion-reduce:transition-none"
+      class:scale-25={!playing}
+      class:blur-sm={!playing}
+      class:opacity-0={!playing}
+    >
       <span
         class="radial-progress"
         style="--value:{progress}; --size:2rem;"
@@ -98,33 +108,3 @@
     </span>
   </span>
 </button>
-
-<style>
-  .media-icon-stack {
-    display: grid;
-    place-items: center;
-  }
-
-  .media-icon {
-    filter: blur(0);
-    grid-area: 1 / 1;
-    opacity: 1;
-    scale: 1;
-    transition:
-      filter 300ms cubic-bezier(0.2, 0, 0, 1),
-      opacity 300ms cubic-bezier(0.2, 0, 0, 1),
-      scale 300ms cubic-bezier(0.2, 0, 0, 1);
-  }
-
-  .media-icon-hidden {
-    filter: blur(4px);
-    opacity: 0;
-    scale: 0.25;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .media-icon {
-      transition: none;
-    }
-  }
-</style>
