@@ -29,9 +29,9 @@
     </div>
   </div>
   <a
-    href="#video-demos"
+    href="#tracks-audiobook"
     class="!row-start-2 mt-6 lg:mt-4"
-    aria-label="View video demos"
+    aria-label="View audiobook tracks"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
