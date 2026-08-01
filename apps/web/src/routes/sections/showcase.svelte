@@ -161,7 +161,7 @@
 
   <div
     class="tabs tabs-box showcase-tabs"
-    role="tablist"
+    role="radiogroup"
     aria-label="Video demo categories"
   >
     {#each categories as category, index (category.id)}
@@ -172,6 +172,7 @@
         name={`${id}-category`}
         value={category.id}
         aria-label={category.title}
+        aria-controls={`${id}-${category.id}-panel`}
         checked={index === 0}
       />
     {/each}
@@ -180,6 +181,7 @@
   <div class="showcase-grid">
     {#each categories as category (category.id)}
       <div
+        id={`${id}-${category.id}-panel`}
         class={`showcase-column showcase-column--${category.id}`}
         role="region"
         aria-labelledby={`${id}-${category.id}-heading`}
@@ -251,6 +253,10 @@
   }
 
   .showcase-grid {
+    --showcase-enter-delay: 160ms;
+    --showcase-enter-duration: 200ms;
+    --showcase-exit-duration: 120ms;
+
     display: grid;
     margin-inline: auto;
     max-width: 96rem;
@@ -328,6 +334,8 @@
     aspect-ratio: 1 / 1;
     background: var(--color-base-300);
     border-radius: var(--radius-box);
+    outline: 1px solid rgba(0, 0, 0, 0.1);
+    outline-offset: -1px;
     overflow: hidden;
   }
 
@@ -348,12 +356,23 @@
       grid-area: 1 / 1;
       opacity: 0;
       pointer-events: none;
-      transform: translateX(1rem);
+      transform: translateX(0.75rem);
       transition:
-        opacity 140ms ease-in,
-        transform 140ms ease-in,
-        visibility 0s linear 140ms;
+        opacity var(--showcase-exit-duration) ease-in,
+        transform var(--showcase-exit-duration) ease-in,
+        visibility 0s linear var(--showcase-exit-duration);
       visibility: hidden;
+    }
+
+    .showcase-tabs .tab {
+      transition:
+        background-color 150ms cubic-bezier(0.2, 0, 0, 1),
+        color 150ms cubic-bezier(0.2, 0, 0, 1),
+        scale 150ms cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .showcase-tabs .tab:active {
+      scale: 0.96;
     }
 
     .showcase-section:has(input[value="game"]:checked)
@@ -366,7 +385,7 @@
         .showcase-column--game,
         .showcase-column--animation
       ) {
-      transform: translateX(-1rem);
+      transform: translateX(-0.75rem);
     }
 
     .showcase-section:has(input[value="audiobooks"]:checked)
@@ -379,9 +398,11 @@
       pointer-events: auto;
       transform: translateX(0);
       transition:
-        opacity 180ms ease-out 180ms,
-        transform 180ms ease-out 180ms,
-        visibility 0s linear 180ms;
+        opacity var(--showcase-enter-duration) cubic-bezier(0.2, 0, 0, 1)
+          var(--showcase-enter-delay),
+        transform var(--showcase-enter-duration) cubic-bezier(0.2, 0, 0, 1)
+          var(--showcase-enter-delay),
+        visibility 0s linear var(--showcase-enter-delay);
       visibility: visible;
       z-index: 1;
     }
