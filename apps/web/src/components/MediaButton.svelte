@@ -6,9 +6,15 @@
   let audio: HTMLAudioElement;
 
   function handleTimeUpdate() {
-    if (audio) {
-      progress = (audio.currentTime / audio.duration) * 100;
+    if (!Number.isFinite(audio.duration) || audio.duration <= 0) {
+      progress = 0;
+      return;
     }
+
+    progress = Math.min(
+      100,
+      Math.max(0, (audio.currentTime / audio.duration) * 100),
+    );
   }
 
   function handlePlay() {
