@@ -24,61 +24,10 @@
   $: ({ data: videoDemos } = $videoDemosRes);
   $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
 
-  type ViewTransitionDocument = Document & {
-    startViewTransition?: (update: () => void) => {
-      finished: Promise<void>;
-    };
-  };
-
   function demosFor(category: (typeof categories)[number]["id"]) {
     return (
       videoDemos?.filter((demo) => stegaClean(demo.category) === category) ?? []
     );
-  }
-
-  function enhanceCategoryChange(event: MouseEvent) {
-    const input = event.currentTarget as HTMLInputElement;
-    const viewTransitionDocument = document as ViewTransitionDocument;
-    const startViewTransition =
-      viewTransitionDocument.startViewTransition?.bind(document);
-
-    if (
-      input.checked ||
-      !startViewTransition ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
-
-    event.preventDefault();
-
-    const tabs = Array.from(
-      input.parentElement?.querySelectorAll<HTMLInputElement>(
-        'input[type="radio"]',
-      ) ?? [],
-    );
-    const currentIndex = tabs.findIndex((tab) => tab.checked);
-    const nextIndex = tabs.indexOf(input);
-    const root = document.documentElement;
-    const forwards = nextIndex > currentIndex;
-
-    root.style.setProperty(
-      "--showcase-enter-offset",
-      forwards ? "1rem" : "-1rem",
-    );
-    root.style.setProperty(
-      "--showcase-exit-offset",
-      forwards ? "-1rem" : "1rem",
-    );
-
-    const transition = startViewTransition(() => {
-      input.checked = true;
-    });
-
-    void transition.finished.finally(() => {
-      root.style.removeProperty("--showcase-enter-offset");
-      root.style.removeProperty("--showcase-exit-offset");
-    });
   }
 
   function pauseOtherVideos(event: Event) {
@@ -224,7 +173,6 @@
         value={category.id}
         aria-label={category.title}
         checked={index === 0}
-        on:click={enhanceCategoryChange}
       />
     {/each}
   </div>
@@ -310,20 +258,7 @@
   }
 
   .showcase-column {
-    display: none;
-    grid-area: 1 / 1;
     min-width: 0;
-  }
-
-  .showcase-section:has(input[value="audiobooks"]:checked)
-    .showcase-column--audiobooks,
-  .showcase-section:has(input[value="game"]:checked) .showcase-column--game,
-  .showcase-section:has(input[value="animation"]:checked)
-    .showcase-column--animation,
-  .showcase-section:has(input[value="ivr"]:checked) .showcase-column--ivr {
-    animation: reveal-category 240ms ease-out;
-    display: block;
-    view-transition-name: showcase-category;
   }
 
   .showcase-column-heading {
@@ -403,37 +338,53 @@
     width: 100%;
   }
 
-  @keyframes reveal-category {
-    from {
+  @media (max-width: 63.999rem) {
+    .showcase-grid {
+      overflow: hidden;
+    }
+
+    .showcase-column {
+      display: block;
+      grid-area: 1 / 1;
       opacity: 0;
+      pointer-events: none;
       transform: translateX(1rem);
+      transition:
+        opacity 140ms ease-in,
+        transform 140ms ease-in,
+        visibility 0s linear 140ms;
+      visibility: hidden;
     }
-    to {
+
+    .showcase-section:has(input[value="game"]:checked)
+      .showcase-column--audiobooks,
+    .showcase-section:has(input[value="animation"]:checked)
+      :is(.showcase-column--audiobooks, .showcase-column--game),
+    .showcase-section:has(input[value="ivr"]:checked)
+      :is(
+        .showcase-column--audiobooks,
+        .showcase-column--game,
+        .showcase-column--animation
+      ) {
+      transform: translateX(-1rem);
+    }
+
+    .showcase-section:has(input[value="audiobooks"]:checked)
+      .showcase-column--audiobooks,
+    .showcase-section:has(input[value="game"]:checked) .showcase-column--game,
+    .showcase-section:has(input[value="animation"]:checked)
+      .showcase-column--animation,
+    .showcase-section:has(input[value="ivr"]:checked) .showcase-column--ivr {
       opacity: 1;
+      pointer-events: auto;
       transform: translateX(0);
+      transition:
+        opacity 180ms ease-out 180ms,
+        transform 180ms ease-out 180ms,
+        visibility 0s linear 180ms;
+      visibility: visible;
+      z-index: 1;
     }
-  }
-
-  @keyframes slide-category-out {
-    to {
-      opacity: 0;
-      transform: translateX(var(--showcase-exit-offset, -1rem));
-    }
-  }
-
-  @keyframes slide-category-in {
-    from {
-      opacity: 0;
-      transform: translateX(var(--showcase-enter-offset, 1rem));
-    }
-  }
-
-  :global(::view-transition-old(showcase-category)) {
-    animation: slide-category-out 240ms ease-in both;
-  }
-
-  :global(::view-transition-new(showcase-category)) {
-    animation: slide-category-in 240ms ease-out both;
   }
 
   @media (min-width: 64rem) {
@@ -468,6 +419,7 @@
     .showcase-section * {
       animation: none !important;
       scroll-behavior: auto;
+      transition: none !important;
     }
   }
 </style>
