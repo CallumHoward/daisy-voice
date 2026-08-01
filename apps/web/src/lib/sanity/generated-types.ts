@@ -52,6 +52,37 @@ export type Slug = {
   source?: string;
 };
 
+export type VideoDemo = {
+  _id: string;
+  _type: "videoDemo";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  category: "audiobooks" | "game" | "animation" | "ivr";
+  videoFile: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    _type: "file";
+  };
+  poster?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  orderRank?: string;
+};
+
 export type Section = {
   _id: string;
   _type: "section";
@@ -62,6 +93,7 @@ export type Section = {
   enabled: boolean;
   type:
     | "hero"
+    | "showcase"
     | "demos"
     | "tracks"
     | "testimonials"

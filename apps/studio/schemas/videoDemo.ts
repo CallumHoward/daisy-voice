@@ -8,9 +8,9 @@ export default defineType({
   fields: [
     defineField({
       name: "title",
-      title: "Internal name",
+      title: "Title",
       description:
-        "Used to identify this video in Studio and by assistive technology",
+        "A short, one-line title shown below the video and used to identify it in Studio",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
@@ -26,13 +26,6 @@ export default defineType({
           { title: "IVR", value: "ivr" },
         ],
       },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "description",
-      title: "Title",
-      description: "A short, one-line title shown below the video",
-      type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({

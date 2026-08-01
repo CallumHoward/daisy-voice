@@ -8,7 +8,6 @@ export type VideoDemo = {
   _id: string;
   title: string;
   category: "audiobooks" | "game" | "animation" | "ivr";
-  description: string;
   url: string;
   poster?: SanityImage;
 };
