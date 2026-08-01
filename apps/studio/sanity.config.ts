@@ -48,6 +48,13 @@ export default defineConfig({
               S,
               context,
             }),
+            orderableDocumentListDeskItem({
+              type: "videoDemo",
+              title: "Video Demo",
+              icon: FolderIcon,
+              S,
+              context,
+            }),
           ]),
     }),
     presentationTool({

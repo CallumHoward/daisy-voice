@@ -3,6 +3,7 @@ import blockContent from "./blockContent";
 import section from "./section";
 import testimonial from "./testimonial";
 import track from "./track";
+import videoDemo from "./videoDemo";
 
 export const schemaTypes = [
   testimonial,
@@ -10,4 +11,5 @@ export const schemaTypes = [
   track,
   audioTrack,
   section,
+  videoDemo,
 ];
