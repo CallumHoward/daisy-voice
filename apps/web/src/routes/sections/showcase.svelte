@@ -91,6 +91,31 @@
       }
     });
   }
+
+  function centerVideo(event: MouseEvent) {
+    const video = event.currentTarget as HTMLVideoElement;
+    const card = video.closest<HTMLElement>(".showcase-card");
+    const carousel = video.closest<HTMLElement>(".showcase-carousel");
+
+    if (!card || !carousel) {
+      return;
+    }
+
+    const cardBounds = card.getBoundingClientRect();
+    const carouselBounds = carousel.getBoundingClientRect();
+    const offset =
+      cardBounds.top -
+      carouselBounds.top +
+      carousel.scrollTop -
+      (carousel.clientHeight - cardBounds.height) / 2;
+
+    carousel.scrollTo({
+      top: offset,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  }
 </script>
 
 <section {id} class="showcase-section" aria-label={heading ?? "Video demos"}>
@@ -157,6 +182,7 @@
                     controls
                     playsinline
                     preload="metadata"
+                    on:click={centerVideo}
                     on:play={pauseOtherVideos}
                   >
                     Your browser does not support embedded video.
@@ -222,15 +248,10 @@
     position: relative;
   }
 
+  .showcase-carousel-mask::before,
   .showcase-carousel-mask::after {
-    background: linear-gradient(
-      to bottom,
-      transparent 25%,
-      var(--color-base-100) 100%
-    );
-    bottom: 0;
     content: "";
-    height: 6rem;
+    height: 7rem;
     left: 0;
     pointer-events: none;
     position: absolute;
@@ -238,13 +259,27 @@
     z-index: 1;
   }
 
+  .showcase-carousel-mask::before {
+    background: linear-gradient(to bottom, var(--color-base-100), transparent);
+    top: 0;
+  }
+
+  .showcase-carousel-mask::after {
+    background: linear-gradient(to bottom, transparent, var(--color-base-100));
+    bottom: 0;
+  }
+
   .showcase-carousel {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 2.2;
     block-size: auto;
     inline-size: 100%;
-    max-block-size: 34rem;
+    max-block-size: 48rem;
     overflow-y: auto;
-    padding-block-end: 5rem;
+    padding-block: max(
+      0px,
+      min(calc(60% - 1rem), calc((48rem - 100% - 2rem) / 2))
+    );
+    row-gap: 1rem;
     scroll-snap-type: y mandatory;
     scrollbar-width: none;
   }
@@ -256,14 +291,14 @@
   .showcase-card {
     display: block;
     flex: none;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     scroll-snap-stop: always;
-    transform-origin: center top;
+    transform-origin: center;
     width: 100%;
   }
 
   .showcase-video-frame {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 1 / 1;
     background: var(--color-base-300);
     border-radius: var(--radius-box);
     overflow: hidden;
@@ -272,7 +307,7 @@
   .showcase-video {
     display: block;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     width: 100%;
   }
 
