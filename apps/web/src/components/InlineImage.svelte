@@ -3,4 +3,4 @@
   export let portableText;
 </script>
 
-<img src={urlFor(portableText.value).url()} alt="" />
+<img class="mx-auto" src={urlFor(portableText.value).url()} alt="" />

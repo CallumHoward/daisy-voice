@@ -11,12 +11,14 @@
   $: id = stegaClean(name).toLowerCase().replace(/\s/g, "-");
 </script>
 
-<section {id} class="hero !grid aspect-square max-h-screen">
+<section {id} class="hero !grid min-h-svh grid-rows-[1fr_auto] lg:!py-6">
   <div class="hero-content max-w-3xl text-center">
     <div class="max-w-3xl">
       <h1 class="text-5xl font-bold">{heading}</h1>
       {#if content}
-        <p class="mb-6 flex flex-col py-6">
+        <p
+          class="mb-6 flex flex-col py-6 lg:mb-3 lg:py-3 lg:[&_img]:max-h-80 lg:[&_img]:w-auto lg:[&_img]:self-center"
+        >
           <PortableText
             components={{ types: { image: InlineImage } }}
             value={content}
@@ -26,7 +28,11 @@
       <a href="#contact" class="btn btn-primary uppercase">Contact</a>
     </div>
   </div>
-  <a href="#tracks-audiobook" class="mt-auto">
+  <a
+    href="#tracks-audiobook"
+    class="!row-start-2 mt-6 lg:mt-4"
+    aria-label="View audiobook tracks"
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="h-6 w-6 stroke-current"

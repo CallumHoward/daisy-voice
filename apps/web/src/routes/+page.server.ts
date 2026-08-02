@@ -9,13 +9,20 @@ import {
   sectionsQuery,
   testimonialsQuery,
   tracksQuery,
+  videoDemoCategoriesQuery,
+  type VideoDemoCategory,
 } from "$lib/sanity/queries";
 import type { QueryResponseInitial } from "@sanity/svelte-loader";
 import type { Actions, PageServerLoad } from "./$types";
 import { handleContactFromAction } from "./contact-form-action";
 
 type AudioTrack = BaseAudioTrack & { url: string };
-type QueryResponseTypes = Testimonial[] | Track[] | AudioTrack[] | Section[];
+type QueryResponseTypes =
+  | Testimonial[]
+  | Track[]
+  | AudioTrack[]
+  | Section[]
+  | VideoDemoCategory[];
 type DataEntry = {
   query: string;
   options: { initial: QueryResponseInitial<QueryResponseTypes> };
@@ -27,6 +34,9 @@ export const load: PageServerLoad = async (event) => {
   const initialTestimonials = await loadQuery<Testimonial[]>(testimonialsQuery);
   const initialTracks = await loadQuery<Track[]>(tracksQuery);
   const initialAudioTracks = await loadQuery<AudioTrack[]>(audioTracksQuery);
+  const initialVideoDemoCategories = await loadQuery<VideoDemoCategory[]>(
+    videoDemoCategoriesQuery,
+  );
   const initialSections = await loadQuery<Section[]>(sectionsQuery);
 
   // We pass the data in a format that is easy for `useQuery` to consume in the
@@ -41,6 +51,10 @@ export const load: PageServerLoad = async (event) => {
     audioTracks: {
       query: audioTracksQuery,
       options: { initial: initialAudioTracks },
+    },
+    videoDemoCategories: {
+      query: videoDemoCategoriesQuery,
+      options: { initial: initialVideoDemoCategories },
     },
     sections: { query: sectionsQuery, options: { initial: initialSections } },
   } satisfies Data;

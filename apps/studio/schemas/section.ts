@@ -29,6 +29,7 @@ export default defineType({
       options: {
         list: [
           { title: "hero", value: "hero" },
+          { title: "showcase", value: "showcase" },
           { title: "demos", value: "demos" },
           { title: "tracks", value: "tracks" },
           { title: "testimonials", value: "testimonials" },
