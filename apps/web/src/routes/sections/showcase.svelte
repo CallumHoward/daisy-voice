@@ -132,7 +132,11 @@
   }
 </script>
 
-<section {id} class="showcase-section" aria-label={heading ?? "Video demos"}>
+<section
+  {id}
+  class="showcase-section flex w-full flex-col px-4 py-16 lg:px-8"
+  aria-label={heading ?? "Video demos"}
+>
   {#if heading}
     <h2 class="mb-16 text-center text-3xl font-bold">{heading}</h2>
   {/if}
@@ -147,80 +151,86 @@
   {/if}
 
   {#if categories?.length}
-    <div
-      class="tabs tabs-box showcase-grid"
-      style={`--showcase-category-count: ${categories.length}`}
-      role="radiogroup"
-      aria-label="Video demo categories"
-    >
-      {#each categories as category, index (category._id)}
-        {@const categoryId = `${id}-${category._id}`}
-        <input
-          id={categoryId}
-          class="tab showcase-category-tab"
-          type="radio"
-          name={`${id}-category`}
-          value={category._id}
-          aria-label={category.title}
-          aria-controls={`${categoryId}-panel`}
-          checked={index === 0}
-        />
-        <div
-          id={`${categoryId}-panel`}
-          class="showcase-column"
-          role="region"
-          aria-labelledby={`${categoryId}-heading`}
-        >
-          <h3
-            id={`${categoryId}-heading`}
-            class="showcase-column-heading mb-4 text-center text-xl font-bold"
+    <div class="flex w-full justify-center">
+      <div
+        class="tabs tabs-box showcase-grid"
+        style:--showcase-category-count={categories.length}
+        role="radiogroup"
+        aria-label="Video demo categories"
+      >
+        {#each categories as category, index (category._id)}
+          {@const categoryId = `${id}-${category._id}`}
+          <input
+            id={categoryId}
+            class="tab showcase-category-tab max-lg:z-[1] max-lg:row-start-1 max-lg:w-full lg:hidden"
+            type="radio"
+            name={`${id}-category`}
+            value={category._id}
+            aria-label={category.title}
+            aria-controls={`${categoryId}-panel`}
+            checked={index === 0}
+          />
+          <div
+            id={`${categoryId}-panel`}
+            class="showcase-column col-span-full row-start-2 mt-8 block min-w-0 lg:col-auto lg:row-auto lg:mt-0"
+            role="region"
+            aria-labelledby={`${categoryId}-heading`}
           >
-            {category.title}
-          </h3>
-
-          <div class="showcase-carousel-mask">
-            <div
-              class="carousel carousel-vertical showcase-carousel"
-              use:manageVideoControls
+            <h3
+              id={`${categoryId}-heading`}
+              class="mb-4 hidden text-center text-xl font-bold lg:block"
             >
-              {#each category.demos as { _id, title, url, poster } (_id)}
-                {@const posterUrl = poster?.asset
-                  ? urlFor(poster).width(1200).auto("format").url()
-                  : undefined}
-                <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-                <article
-                  class="carousel-item showcase-card"
-                  on:click={activateCard}
-                >
-                  <div class="showcase-video-frame">
-                    <!-- svelte-ignore a11y-media-has-caption -->
-                    <video
-                      class="showcase-video"
-                      src={url}
-                      poster={posterUrl}
-                      aria-label={title}
-                      controls
-                      playsinline
-                      preload="metadata"
-                      on:play={pauseOtherVideos}
-                    >
-                      Your browser does not support embedded video.
-                    </video>
-                  </div>
-                  <button
-                    type="button"
-                    class="block w-full cursor-pointer truncate px-1 pt-3 text-left text-sm font-medium"
+              {category.title}
+            </h3>
+
+            <div
+              class="showcase-carousel-mask relative mx-auto w-[min(100%,28rem,55svh)] overflow-hidden lg:w-full"
+            >
+              <div
+                class="carousel carousel-vertical showcase-carousel aspect-[1/1.69] h-auto max-h-[48rem] w-full snap-y snap-mandatory gap-y-4 overflow-y-auto [scrollbar-width:none]"
+                use:manageVideoControls
+              >
+                {#each category.demos as { _id, title, url, poster } (_id)}
+                  {@const posterUrl = poster?.asset
+                    ? urlFor(poster).width(1200).auto("format").url()
+                    : undefined}
+                  <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+                  <article
+                    class="carousel-item showcase-card block w-full flex-none snap-center pb-4 [scroll-snap-stop:always]"
+                    on:click={activateCard}
                   >
-                    {title}
-                  </button>
-                </article>
-              {:else}
-                <p class="py-8 text-sm opacity-60">No videos yet.</p>
-              {/each}
+                    <div
+                      class="aspect-square overflow-hidden rounded-box bg-base-300 -outline-offset-1 outline [outline-color:rgba(0,0,0,0.1)]"
+                    >
+                      <!-- svelte-ignore a11y-media-has-caption -->
+                      <video
+                        class="block h-full w-full object-cover"
+                        src={url}
+                        poster={posterUrl}
+                        aria-label={title}
+                        controls
+                        playsinline
+                        preload="metadata"
+                        on:play={pauseOtherVideos}
+                      >
+                        Your browser does not support embedded video.
+                      </video>
+                    </div>
+                    <button
+                      type="button"
+                      class="block w-full cursor-pointer truncate px-1 pt-3 text-left text-sm font-medium"
+                    >
+                      {title}
+                    </button>
+                  </article>
+                {:else}
+                  <p class="py-8 text-sm opacity-60">No videos yet.</p>
+                {/each}
+              </div>
             </div>
           </div>
-        </div>
-      {/each}
+        {/each}
+      </div>
     </div>
   {:else}
     <p class="py-8 text-center text-sm opacity-60">No video categories yet.</p>
@@ -228,13 +238,6 @@
 </section>
 
 <style>
-  .showcase-section {
-    display: flex;
-    flex-direction: column;
-    padding: 4rem 1rem;
-    width: 100%;
-  }
-
   .showcase-grid {
     --showcase-enter-delay: 160ms;
     --showcase-enter-duration: 200ms;
@@ -244,48 +247,27 @@
     border-radius: 0;
     display: grid;
     grid-auto-flow: row;
-    margin-inline: auto;
     max-width: 96rem;
     padding: 0;
     position: relative;
     width: 100%;
   }
 
-  .showcase-column {
-    min-width: 0;
-  }
-
-  .showcase-column-heading {
-    display: none;
-  }
-
   .showcase-carousel-mask {
-    inline-size: min(100%, 28rem, 55svh);
-    margin-inline: auto;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .showcase-carousel-mask::before,
-  .showcase-carousel-mask::after {
-    content: "";
-    left: 0;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    z-index: 1;
-  }
-
-  .showcase-carousel-mask::before {
-    background: linear-gradient(to bottom, var(--color-base-100), transparent);
-    height: 5rem;
-    top: 0;
-  }
-
-  .showcase-carousel-mask::after {
-    background: linear-gradient(to bottom, transparent, var(--color-base-100));
-    bottom: 0;
-    height: 5rem;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      black 5rem,
+      black calc(100% - 5rem),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      black 5rem,
+      black calc(100% - 5rem),
+      transparent
+    );
   }
 
   .showcase-carousel {
@@ -294,44 +276,11 @@
       min(calc(20% + 1.6rem), calc((48rem - 100% - 3rem) / 2))
     );
 
-    aspect-ratio: 1 / 1.69;
-    block-size: auto;
-    inline-size: 100%;
-    max-block-size: 48rem;
-    overflow-y: auto;
     padding-block: var(--showcase-boundary-padding);
-    row-gap: 1rem;
-    scroll-snap-type: y mandatory;
-    scrollbar-width: none;
   }
 
   .showcase-carousel::-webkit-scrollbar {
     display: none;
-  }
-
-  .showcase-card {
-    display: block;
-    flex: none;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    width: 100%;
-    padding-bottom: 1rem;
-  }
-
-  .showcase-video-frame {
-    aspect-ratio: 1 / 1;
-    background: var(--color-base-300);
-    border-radius: var(--radius-box);
-    outline: 1px solid rgba(0, 0, 0, 0.1);
-    outline-offset: -1px;
-    overflow: hidden;
-  }
-
-  .showcase-video {
-    display: block;
-    height: 100%;
-    object-fit: cover;
-    width: 100%;
   }
 
   @media (max-width: 63.999rem) {
@@ -353,18 +302,7 @@
       position: absolute;
     }
 
-    .showcase-category-tab {
-      grid-row: 1;
-      min-width: 0;
-      width: 100%;
-      z-index: 1;
-    }
-
     .showcase-column {
-      display: block;
-      grid-column: 1 / -1;
-      grid-row: 2;
-      margin-top: 2rem;
       opacity: 0;
       pointer-events: none;
       transform: translateX(0.75rem);
@@ -376,6 +314,7 @@
     }
 
     .showcase-category-tab {
+      min-width: 0;
       transition:
         background-color 150ms cubic-bezier(0.2, 0, 0, 1),
         color 150ms cubic-bezier(0.2, 0, 0, 1),
@@ -406,11 +345,6 @@
   }
 
   @media (min-width: 64rem) {
-    .showcase-section {
-      padding-inline: 2rem;
-    }
-
-    .showcase-category-tab,
     .showcase-grid::before {
       display: none;
     }
@@ -421,20 +355,6 @@
         var(--showcase-category-count),
         minmax(0, 1fr)
       );
-    }
-
-    .showcase-column {
-      display: block;
-      grid-area: auto;
-      margin-top: 0;
-    }
-
-    .showcase-column-heading {
-      display: block;
-    }
-
-    .showcase-carousel-mask {
-      inline-size: 100%;
     }
   }
 
