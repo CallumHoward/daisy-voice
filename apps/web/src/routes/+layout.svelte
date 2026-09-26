@@ -2,8 +2,23 @@
   import { isPreviewing, VisualEditing } from "@sanity/visual-editing/svelte";
   import { page } from "$app/stores";
   import LiveMode from "../components/LiveMode.svelte";
+  import { env } from "$env/dynamic/public";
   import "../app.css";
+
+  const gaId = env.PUBLIC_GA_MEASUREMENT_ID;
 </script>
+
+<svelte:head>
+  {#if gaId}
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+    {@html `<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", ${JSON.stringify(gaId)});
+    </script>`}
+  {/if}
+</svelte:head>
 
 {#if $isPreviewing}
   <a
