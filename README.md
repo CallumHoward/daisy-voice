@@ -18,7 +18,7 @@ This starter uses [SvelteKit](https://kit.svelte.dev/) for the frontend and [San
 
 ## Prerequisities
 
-- [Node.js](https://nodejs.org/en/) (v14.18 or later)
+- [Node.js](https://nodejs.org/en/) v24 (see `.nvmrc`)
 - [Sanity CLI](https://www.sanity.io/docs/getting-started-with-sanity-cli) (optional)
 
 ## Getting started
